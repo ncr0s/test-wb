@@ -21,4 +21,13 @@ public interface WebDriverConfig extends Config {
     @Key("browserVersion")
     @DefaultValue("132.0")
     String getBrowserVersion();
+
+    @Key("remoteUrl")
+    String getRemoteUrl();
+
+    @Key("pageLoadTimeout")
+    Long getPageLoadTimeout();
+
+    @Key("timeout")
+    Long getTimeout();
 }

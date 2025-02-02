@@ -9,6 +9,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import pages.MainPage;
 
+import static com.codeborne.selenide.Configuration.remote;
+
 public class TestBase {
 
     protected MainPage mainPage = new MainPage();
@@ -27,6 +29,8 @@ public class TestBase {
     void addAttachments() {
         Attachments.screenshotAs("Last screen");
         Attachments.pageSource();
-        Attachments.addVideo();
+        if(remote != null) {
+            Attachments.addVideo();
+        }
     }
 }

@@ -5,6 +5,8 @@ import io.qameta.allure.Step;
 
 import java.io.File;
 
+import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.page;
@@ -12,6 +14,7 @@ import static com.codeborne.selenide.Selenide.page;
 public class AccountWizardPage {
 
     private final SelenideElement
+        pageTitle = $("#wizard-page-title"),
         individualAccountButton = $(".value-individual"),
         biomaterialConsentCheckBox = $("#field-element-biometriaIsConsented"),
         startVerificationButton = $("#wizard-individual-avs-form-submit-btn"),
@@ -162,8 +165,13 @@ public class AccountWizardPage {
 
     @Step("Press 'Dismiss and delete my account' button")
     public MainPage cancel() {
-        cancelButton.click();
+        cancelButton.scrollIntoView(true).click();
         dismissOkButton.click();
         return page(MainPage.class);
+    }
+
+    @Step("Wizard page title should be visible")
+    public void wizardPageTitleShouldBeVisible() {
+        pageTitle.shouldBe(visible);
     }
 }

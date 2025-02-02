@@ -2,22 +2,35 @@ package tests;
 
 
 import com.github.javafaker.Faker;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Story;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 import pages.AccountWizardPage;
 
-import static com.codeborne.selenide.Selenide.sleep;
-
 public class FillInRegistrationFormAndDismissTest extends TestBase {
 
+    Faker faker = new Faker();
+
     @Test
+    @Tags({@Tag("UI"), @Tag("Positive")})
+    @Feature("studio.faphouse.com")
+    @Story("Registration form")
+    @Severity(SeverityLevel.CRITICAL)
+    @DisplayName("Positive: Fill in the business account registration form and dismiss")
     public void fillInRegistrationFormAndDismiss() {
-        Faker faker = new Faker();
 
         AccountWizardPage wizardPage = mainPage.openPage()
             .setUserName(String.format("%s%s", faker.name().firstName(), faker.number().numberBetween(1000, 9999)))
-            .setEmail( faker.internet().emailAddress())
+            .setEmail(faker.internet().emailAddress())
             .setPassword(String.format("%s%s", faker.name().lastName(), faker.number().numberBetween(600, 742)))
             .getStarted();
+
+        wizardPage.wizardPageTitleShouldBeVisible();
 
         mainPage = wizardPage.switchToBusiness()
             .setProducerName(faker.name().fullName())
@@ -37,12 +50,12 @@ public class FillInRegistrationFormAndDismissTest extends TestBase {
             .contractSignedCheck()
             .accept()
             .uploadPassport("pic.jpg")
-            .uploadPassportSecondPage("pic.jpg")
-            .uploadCommercialRegisterExtract("pic.jpg")
+            .uploadPassportSecondPage("sample.pdf")
+            .uploadCommercialRegisterExtract("sample_big.jpeg")
             .uploadCertificateOfIncorporation("pic.jpg")
             .accept()
             .cancel();
 
-
+        mainPage.mainPageTitleShouldBeEqual("Monetize your content with FapHouse");
     }
 }
