@@ -5,7 +5,6 @@ import io.qameta.allure.Step;
 
 import java.io.File;
 
-import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
@@ -171,7 +170,15 @@ public class AccountWizardPage {
     }
 
     @Step("Wizard page title should be visible")
-    public void wizardPageTitleShouldBeVisible() {
+    public AccountWizardPage wizardPageTitleShouldBeVisible() {
         pageTitle.shouldBe(visible);
+        return this;
+    }
+
+    @Step("Wizard page title should be visible")
+    public AccountWizardPage wizardPageButtonsShouldBeVisible() {
+        individualAccountButton.shouldBe(visible);
+        businessAccountButton.shouldBe(visible);
+        return this;
     }
 }

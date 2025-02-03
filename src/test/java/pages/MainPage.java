@@ -10,6 +10,7 @@ import static com.codeborne.selenide.Selenide.*;
 public class MainPage {
 
     private final SelenideElement
+        languagePickerButtonText = $(".language-picker__btn-text"),
         landingMainTitle = $(".landing-main__title"),
         usernameInput = $("[name=username]"),
         emailInput = $("[name=email]"),
@@ -18,6 +19,10 @@ public class MainPage {
     public MainPage openPage() {
         open("");
         return this;
+    }
+
+    public String getLanguage() {
+        return languagePickerButtonText.getText();
     }
 
     @Step("Set user name: {value}")
@@ -45,8 +50,17 @@ public class MainPage {
     }
 
     @Step("Check main page title")
-    public void mainPageTitleShouldBeEqual(String title) {
+    public MainPage mainPageTitleShouldBeEqual(String title) {
         landingMainTitle.shouldBe(visible);
         landingMainTitle.shouldHave(text(title));
+        return this;
+    }
+
+    @Step("Landing registration form should be visible")
+    public MainPage mainPageRegistrationFieldsShouldBeVisible() {
+        usernameInput.shouldBe(visible);
+        emailInput.shouldBe(visible);
+        passwordInput.shouldBe(visible);
+        return this;
     }
 }
